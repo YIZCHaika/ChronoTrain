@@ -25,11 +25,11 @@ def get_departures():
 
 # --- Initialisation Pygame ---
 pygame.init()
-screen = pygame.display.set_mode((1920, 1080))
+screen = pygame.display.set_mode((1280, 800))
 pygame.display.set_caption("Départs Saint-Brieuc")
 
 background = pygame.image.load("image_sncf_2.jpg")
-background = pygame.transform.scale(background, (1920, 1080))
+background = pygame.transform.scale(background, (1280, 1080))
 
 BLANC = (255, 255, 255)
 NOIR = (0, 0, 0)
@@ -58,7 +58,7 @@ while running:
     # --- Tableau dynamique ---
     if trains:
         top_y = 100
-        line_height = 90
+        line_height = 100
         lignes = [f"{h}   {num}   {dest}   Quai {quai}" for h, num, dest, quai in trains]
 
         # Trouver la largeur max du texte
@@ -66,14 +66,13 @@ while running:
         max_width = max(largeurs) + 125  # +40 px de marge
 
         # Calculer hauteur totale
-        box_height = len(lignes) * line_height + 40
-
+        box_height = len(lignes) * line_height + 60
         # Dessiner rectangle arrondi
         rect = pygame.Rect(450, top_y, max_width, box_height)
         pygame.draw.rect(screen, BLANC, rect, border_radius=20)
 
         # Afficher les lignes
-        y = top_y + 30
+        y = top_y + 60
         for ligne in lignes:
             texte = font.render(ligne, True, NOIR)
             screen.blit(texte, (500, y))
