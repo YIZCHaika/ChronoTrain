@@ -25,11 +25,11 @@ def get_departures():
 
 # --- Initialisation Pygame ---
 pygame.init()
-screen = pygame.display.set_mode((1440, 900))
+screen = pygame.display.set_mode((1920, 1080))
 pygame.display.set_caption("Départs Saint-Brieuc")
 
 background = pygame.image.load("image_sncf_2.jpg")
-background = pygame.transform.scale(background, (1440, 900))
+background = pygame.transform.scale(background, (1920, 1080))
 
 BLANC = (255, 255, 255)
 NOIR = (0, 0, 0)
@@ -53,30 +53,30 @@ while running:
 
     # Titre
     titre = font_titre.render("Prochains départs - Saint-Brieuc", True, NOIR)
-    screen.blit(titre, (50, 20))
+    screen.blit(titre, (550, 20))
 
     # --- Tableau dynamique ---
     if trains:
-        top_y = 110
-        line_height = 60
+        top_y = 100
+        line_height = 90
         lignes = [f"{h}   {num}   {dest}   Quai {quai}" for h, num, dest, quai in trains]
 
         # Trouver la largeur max du texte
         largeurs = [font.size(ligne)[0] for ligne in lignes]
-        max_width = max(largeurs) + 40  # +40 px de marge
+        max_width = max(largeurs) + 125  # +40 px de marge
 
         # Calculer hauteur totale
-        box_height = len(lignes) * line_height + 20
+        box_height = len(lignes) * line_height + 40
 
         # Dessiner rectangle arrondi
-        rect = pygame.Rect(40, top_y, max_width, box_height)
+        rect = pygame.Rect(450, top_y, max_width, box_height)
         pygame.draw.rect(screen, BLANC, rect, border_radius=20)
 
         # Afficher les lignes
-        y = top_y + 10
+        y = top_y + 30
         for ligne in lignes:
             texte = font.render(ligne, True, NOIR)
-            screen.blit(texte, (50, y))
+            screen.blit(texte, (500, y))
             y += line_height
 
     else:
