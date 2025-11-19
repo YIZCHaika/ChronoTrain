@@ -16,8 +16,7 @@ def get_departures():
             heure = heure[:2] + ":" + heure[2:]
             destination = dep["display_informations"]["direction"]
             num = dep["display_informations"]["headsign"]
-            quai = dep["stop_date_time"].get("platform", "NC")
-            trains.append((heure, num, destination, quai))
+            trains.append((heure, num, destination))
         return trains
     except Exception as e:
         print("Erreur récupération données:", e)
@@ -59,7 +58,7 @@ while running:
     if trains:
         top_y = 100
         line_height = 100
-        lignes = [f"{h}   {num}   {dest}   Quai {quai}" for h, num, dest, quai in trains]
+        lignes = [f"{h}   {num}   {dest}   " for h, num, dest in trains]
 
         # Trouver la largeur max du texte
         largeurs = [font.size(ligne)[0] for ligne in lignes]
