@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Départs Saint-Brieuc</title>
-
     <style>
         body {
             margin: 0;
@@ -11,9 +10,7 @@
             background: url('image_sncf_2.jpg') no-repeat center center fixed;
             background-size: cover;
             font-family: Arial, sans-serif;
-            overflow-x: hidden;
         }
-
         .titre {
             text-align: center;
             margin-top: 20px;
@@ -21,7 +18,6 @@
             font-weight: bold;
             color: black;
         }
-
         .box {
             background: white;
             border-radius: 20px;
@@ -31,46 +27,28 @@
             min-width: 600px;
             font-size: 32px;
             color: black;
-            overflow: hidden;
         }
-
         .ligne {
             padding: 20px 0;
             border-bottom: 1px solid #ccc;
-            opacity: 0;
-            transform: translateX(-40px);
-            animation: slideIn 0.7s ease-out forwards;
         }
-
         .ligne:last-child {
             border-bottom: none;
         }
-
-        /* Animation SNCF style flip/slide */
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
     </style>
 </head>
-
 <body>
 
 <h1 class="titre">Prochains départs - Saint-Brieuc</h1>
 
-<div id="conteneur" class="box">Chargement...</div>
+<div id="conteneur" class="box">
+    Chargement...
+</div>
 
 <script>
 const API_KEY = "0fbf3cad-2179-4195-bd01-8ad080fe453b";
 const URL = "https://api.sncf.com/v1/coverage/sncf/stop_areas/stop_area:SNCF:87473009/departures";
 
-// Fonction API SNCF
 async function getDepartures() {
     try {
         const response = await fetch(URL, {
@@ -79,9 +57,10 @@ async function getDepartures() {
 
         const data = await response.json();
 
-        return data.departures.slice(0, 6).map(dep => {
+        const trains = data.departures.slice(0, 6).map(dep => {
             let heure = dep.stop_date_time.departure_date_time.substring(9, 13);
             heure = heure.substring(0, 2) + ":" + heure.substring(2);
+
             return {
                 heure: heure,
                 num: dep.display_informations.headsign,
@@ -89,36 +68,36 @@ async function getDepartures() {
             };
         });
 
+        return trains;
+
     } catch (e) {
         console.error("Erreur API :", e);
         return [];
     }
 }
 
-// Mise à jour avec animation
 async function updateDisplay() {
     const conteneur = document.getElementById("conteneur");
+    conteneur.innerHTML = "Chargement...";
 
     const trains = await getDepartures();
 
-    conteneur.innerHTML = "";
-
     if (trains.length === 0) {
-        conteneur.innerHTML = "<div class='ligne'>Aucun départ disponible</div>";
+        conteneur.innerHTML = "<div>Aucun départ disponible</div>";
         return;
     }
 
-    trains.forEach((t, index) => {
+    conteneur.innerHTML = "";
+
+    trains.forEach(t => {
         const div = document.createElement("div");
         div.className = "ligne";
-        div.style.animationDelay = (index * 0.15) + "s"; // Décalage animation
-
         div.textContent = `${t.heure}   ${t.num}   ${t.dest}`;
         conteneur.appendChild(div);
     });
 }
 
-// Afficher immédiatement + toutes les 30 secondes
+// Mise à jour toutes les 30 secondes
 updateDisplay();
 setInterval(updateDisplay, 30000);
 </script>
