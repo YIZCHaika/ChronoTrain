@@ -24,7 +24,7 @@ body {
     min-width: 600px;
     font-size: 32px;
     color: black;
-    overflow: hidden;
+    overflow: hidden; /* Masquer les débordements */
 }
 
 .ligne {
@@ -50,4 +50,11 @@ body {
         opacity: 1;
         transform: translateX(0);
     }
+}
+
+.logo {
+    border-radius: 30px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
 }
