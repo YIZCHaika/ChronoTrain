@@ -13,6 +13,12 @@ body {
     font-size: 40px;
     font-weight: bold;
     color: black;
+    background-color: white;
+    padding: 20px 10px;
+    width: fit-content;
+    margin: auto auto;  
+    border-radius: 15px;
+    text-align: center;
 }
 
 .box {
@@ -61,13 +67,8 @@ body {
 
 #time {
   font-size: 60px;
-  font-family: 'Roboto', sans-serif;
+  font-family: Arial, sans-serif;
   color: #000000;
-  text-shadow:
-   -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-     1px 1px 0 #000;
   top: 35px;
   right: 200px;
   position: absolute;
