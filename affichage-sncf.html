@@ -44,8 +44,11 @@
             border-bottom: none;
         }
     </style>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
 </head>
 <body>
+
+<div id="time"></div>
 
 <h1 class="titre">Prochains départs - Saint-Brieuc</h1>
 
@@ -58,8 +61,8 @@
     src="logo.png"
     style="border-radius: 150px;"
     alt="logo_sacre_coeur"
-    width="200"
-    height="200"/>
+    width="150"
+    height="150"/>
 
 </div>
 
@@ -110,7 +113,7 @@ async function updateDisplay() {
     trains.forEach(t => {
         const div = document.createElement("div");
         div.className = "ligne";
-        div.textContent = `${t.heure}   ${t.num}   ${t.dest}`;
+        div.innerHTML = `<span class="heure-train">${t.heure}</span>   ${t.num}   ${t.dest}`;
         conteneur.appendChild(div);
     });
 }
@@ -119,6 +122,8 @@ async function updateDisplay() {
 updateDisplay();
 setInterval(updateDisplay, 30000);
 </script>
+
+<script src="javascript.js"></script>
 
 </body>
 </html>

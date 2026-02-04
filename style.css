@@ -58,3 +58,24 @@ body {
     top: 20px;
     right: 20px;
 }
+
+#time {
+  font-size: 60px;
+  font-family: 'Roboto', sans-serif;
+  color: #000000;
+  text-shadow:
+   -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
+  top: 35px;
+  right: 200px;
+  position: absolute;
+  background-color: white;
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+
+.heure-train {
+  font-weight: bold;
+}
