@@ -33,19 +33,27 @@
         .box {
             background: white;
             border-radius: 20px;
-            margin: 100px auto;
+            margin: 50px auto;
             padding: 30px;
             width: fit-content;
-            min-width: 900px;
+            min-width: 600px;
             font-size: 32px;
             color: black;
         }
         .ligne {
             padding: 20px 0;
             border-bottom: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Espace entre les éléments */
         }
         .ligne:last-child {
             border-bottom: none;
+        }
+        .type-train {
+            font-weight: bold;
+            color: #0055A4; /* Bleu SNCF pour faire ressortir le type */
+            text-transform: uppercase;
         }
     </style>
 </head>
@@ -88,7 +96,9 @@ async function getDepartures() {
             return {
                 heure: heure,
                 num: dep.display_informations.headsign,
-                dest: dep.display_informations.direction
+                dest: dep.display_informations.direction,
+                // On récupère le type de train (TER, TGV, etc.)
+                type: dep.display_informations.commercial_mode 
             };
         });
 
@@ -116,7 +126,8 @@ async function updateDisplay() {
     trains.forEach(t => {
         const div = document.createElement("div");
         div.className = "ligne";
-        div.innerHTML = `<span class="heure-train">${t.heure}</span>   ${t.num}   ${t.dest}`;
+        // On affiche maintenant le type de train dans un <span> dédié
+        div.innerHTML = `<span class="heure-train">${t.heure}</span> <span class="type-train">${t.type}</span> <span>${t.num}</span> <span>${t.dest}</span>`;
         conteneur.appendChild(div);
     });
 }
