@@ -22,14 +22,14 @@ body {
 }
 
 .box {
-    background: white;
+    background: rgb(255, 255, 255);
     border-radius: 20px;
     margin: 50px auto;
     padding: 30px;
     width: fit-content;
-    min-width: 600px;
+    min-width: 900px;
     font-size: 32px;
-    color: black;
+    color: rgb(20, 20, 20);
     overflow: hidden; /* Masquer les débordements */
 }
 
