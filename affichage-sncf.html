@@ -63,21 +63,21 @@
 
 <h1 class="titre">Prochains départs - Saint-Brieuc</h1>
 
-<div id="conteneur" class="box">
-    Chargement...
+<div id="conteneur" class="box"> /* Message affiché pendant le chargement des données */
+    Chargement...  
 </div>
 
-<div class="logo">
+<div class="logo"> 
   <img
     src="logo.png"
     style="border-radius: 150px;"
     alt="logo_sacre_coeur"
     width="150"
     height="150"/>
-
+ 
 </div>
 
-<script>
+<script> //* Code JavaScript pour récupérer les départs des trains et les afficher dynamiquement (script "getDepartures" récupérer sur internet) */
 const API_KEY = "0fbf3cad-2179-4195-bd01-8ad080fe453b";
 const URL = "https://api.sncf.com/v1/coverage/sncf/stop_areas/stop_area:SNCF:87473009/departures";
 
@@ -109,7 +109,7 @@ async function getDepartures() {
         return [];
     }
 }
-
+ // Fonction pour mettre à jour l'affichage des départs
 async function updateDisplay() {
     const conteneur = document.getElementById("conteneur");
     conteneur.innerHTML = "Chargement...";
@@ -126,7 +126,7 @@ async function updateDisplay() {
     trains.forEach(t => {
         const div = document.createElement("div");
         div.className = "ligne";
-        // On affiche maintenant le type de train dans un <span> dédié
+        // On affiche maintenant le type de train
         div.innerHTML = `<span class="heure-train">${t.heure}</span> <span class="type-train">${t.type}</span> <span>${t.num}</span> <span>${t.dest}</span>`;
         conteneur.appendChild(div);
     });
@@ -135,6 +135,7 @@ async function updateDisplay() {
 // Mise à jour toutes les 30 secondes
 updateDisplay();
 setInterval(updateDisplay, 30000);
+// appel du script
 </script>
 
 <script src="javascript.js"></script>
