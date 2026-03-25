@@ -57,6 +57,11 @@ body {
         transform: translateX(0);
     }
 }
+.type-train {
+            font-weight: bold;
+            color: #0055A4; /* Bleu SNCF pour faire ressortir le type */
+            text-transform: uppercase;
+        }
 
 .logo {
     border-radius: 30px;
