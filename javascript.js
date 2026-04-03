@@ -12,3 +12,63 @@ function checkTime(i) {
   return i;
 }
 startTime();
+
+//* Code JavaScript pour récupérer les départs des trains et les afficher dynamiquement (script "getDepartures" récupérer sur internet) */
+const API_KEY = "0fbf3cad-2179-4195-bd01-8ad080fe453b";
+const URL = "https://api.sncf.com/v1/coverage/sncf/stop_areas/stop_area:SNCF:87473009/departures";
+
+async function getDepartures() {
+    try {
+        const response = await fetch(URL, {
+            headers: { "Authorization": "Basic " + btoa(API_KEY + ":") }
+        });
+
+        const data = await response.json();
+
+        const trains = data.departures.slice(0, 6).map(dep => {
+            let heure = dep.stop_date_time.departure_date_time.substring(9, 13);
+            heure = heure.substring(0, 2) + ":" + heure.substring(2);
+
+            return {
+                heure: heure,
+                num: dep.display_informations.headsign,
+                dest: dep.display_informations.direction,
+                // On récupère le type de train (TER, TGV, etc.)
+                type: dep.display_informations.commercial_mode 
+            };
+        });
+
+        return trains;
+
+    } catch (e) {
+        console.error("Erreur API :", e);
+        return [];
+    }
+}
+ // Fonction pour mettre à jour l'affichage des départs
+async function updateDisplay() {
+    const conteneur = document.getElementById("conteneur");
+    conteneur.innerHTML = "Chargement...";
+
+    const trains = await getDepartures();
+
+    if (trains.length === 0) {
+        conteneur.innerHTML = "<div>Aucun départ disponible</div>";
+        return;
+    }
+
+    conteneur.innerHTML = "";
+
+    trains.forEach(t => {
+        const div = document.createElement("div");
+        div.className = "ligne";
+        // On affiche maintenant le type de train
+        div.innerHTML = `<span class="heure-train">${t.heure}</span> <span class="type-train">${t.type}</span> <span>${t.num}</span> <span>${t.dest}</span>`;
+        conteneur.appendChild(div);
+    });
+}
+
+// Mise à jour toutes les 30 secondes
+updateDisplay();
+setInterval(updateDisplay, 30000);
+// appel du script
